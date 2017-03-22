@@ -98,6 +98,7 @@ function loadScript(scriptPath) {
         return result;
       };
       var process = {env: {}};
+      var global = {};
   `;
   var module = {exports: {}};
   return globalEval(extraHeader + request.responseText + 'return module.exports})')(module, module.exports, modulesCache, packageJsonMainCache, nodeModulesDir);
