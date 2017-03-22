@@ -73,6 +73,10 @@ function loadScript(scriptPath) {
             var jsonRequest = new XMLHttpRequest();
             jsonRequest.open("GET", packageJson, false);
             jsonRequest.send();
+            var main;
+            if (jsonRequest.responseText != null) {
+              main = JSON.parse(jsonRequest.responseText).main;
+            };
             if (main == null) {
               main = 'index.js';
             } else if (!main.endsWith('.js')) {
