@@ -24,5 +24,5 @@ Tada! All your js files' `require` statements will work! No watcher, no code bun
 
 - Doesn't support code splitting. Kidding, it supports all the code splitting.
 
-- Doesn't have a logo.
+- Doesn't have a logo (TODO: create an entire community around this script).
 
