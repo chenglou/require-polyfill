@@ -15,6 +15,8 @@ Where `data-root` is the project root, where `node_modules` is located.
 Tada! All your js files' `require` statements will work! No watcher, no code bundling, no hassle.
 
 **Note**: This is only meant to be used as a development time convenience.
+**Note2**: On browsers like Chrome that disallow cross origin requests, we can't load directly from the file system. Start a local server in that case. Alternatively, try Safari or Firefox!
+
 
 ## Known Issues
 
