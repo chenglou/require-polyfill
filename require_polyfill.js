@@ -45,7 +45,7 @@ function pathNormalize(path) {
 
 var globalEval = eval;
 var currentScript = document.currentScript;
-var projectRoot = currentScript.dataset['project-root'];
+var projectRoot = currentScript.dataset['project-root'] || currentScript.dataset['projectRoot'];
 if (projectRoot == null) {
   throw new Error('The attribute `data-project-root` isn\'t found in the script tag. You need to provide the root (in which node_modules reside).')
 }
@@ -54,6 +54,13 @@ var nodeModulesDir = projectRoot + '/node_modules/';
 var modulesCache = {};
 var packageJsonMainCache = {};
 
+var ensureEndsWithJs = function(path) {
+  if (path.endsWith('.js')) {
+    return path;
+  } else {
+    return path + '.js';
+  }
+};
 function loadScript(scriptPath) {
   var request = new XMLHttpRequest();
 
@@ -65,11 +72,12 @@ function loadScript(scriptPath) {
   var extraHeader = `
     (function(module, exports, modulesCache, packageJsonMainCache, nodeModulesDir) {
       function require(path) {
+        console.log(path);
         var __dirname = "${dir}/";
         var resolvedPath;
         if (path.startsWith('.')) {
           // require('./foo/bar')
-          resolvedPath = __dirname + path + '.js';
+          resolvedPath = ensureEndsWithJs(__dirname + path);
         } else if (path.indexOf('/') === -1) {
           // require('react')
           var packageJson = pathNormalize(nodeModulesDir + path + '/package.json');
@@ -91,7 +99,7 @@ function loadScript(scriptPath) {
           resolvedPath = packageJsonMainCache[packageJson];
         } else {
           // require('react/bar')
-          resolvedPath = nodeModulesDir + path + '.js';
+          resolvedPath = ensureEndsWithJs(nodeModulesDir + path);
         };
         resolvedPath = pathNormalize(resolvedPath);
         if (modulesCache[resolvedPath] != null) {
