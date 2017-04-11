@@ -72,7 +72,6 @@ function loadScript(scriptPath) {
   var extraHeader = `
     (function(module, exports, modulesCache, packageJsonMainCache, nodeModulesDir) {
       function require(path) {
-        console.log(path);
         var __dirname = "${dir}/";
         var resolvedPath;
         if (path.startsWith('.')) {
