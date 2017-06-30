@@ -111,7 +111,7 @@ function loadScript(scriptPath) {
     modulesCache[resolvedPath] = result;
     return result;
   };
-  var process = {env: {}};
+  var process = {env: {}, argv: []};
   var global = {};
 
 
