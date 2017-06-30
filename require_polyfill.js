@@ -104,6 +104,9 @@ function loadScript(scriptPath) {
     if (modulesCache[resolvedPath] != null) {
       return modulesCache[resolvedPath];
     };
+
+    // initialize cache with an empty object, allows circular dependencies
+    modulesCache[resolvedPath] = {};
     var result = loadScript(resolvedPath);
     modulesCache[resolvedPath] = result;
     return result;
