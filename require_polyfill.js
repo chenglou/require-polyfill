@@ -55,7 +55,7 @@ var modulesCache = {};
 var packageJsonMainCache = {};
 
 var ensureEndsWithJs = function(path) {
-  if (path.endsWith('.js')) {
+  if (path.endsWith('.js') || path.endsWith('.json')) {
     return path;
   } else {
     return path + '.js';
@@ -66,6 +66,8 @@ function loadScript(scriptPath) {
 
   request.open("GET", scriptPath, false); // sync
   request.send();
+  if (scriptPath.endsWith('.json')) return JSON.parse(request.responseText);        // if .json, just return parsed result
+
   var dirSeparatorIndex = scriptPath.lastIndexOf('/');
   var dir = dirSeparatorIndex === -1 ? '.' : scriptPath.slice(0, dirSeparatorIndex);
 
